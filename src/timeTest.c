@@ -5,7 +5,9 @@
  *      Author: haoran
  */
 
+#include <stdio.h>
 #include <time.h>
+#include <sys/time.h>
 
 #include "timeTest.h"
 
@@ -23,8 +25,24 @@ void print_tm(const struct tm *ptm){
 }
 
 void timeTest(){
-	time_t time1;
-	time(&time1);
-	struct tm *utc_tm1 = gmtime(&time1);
-	print_tm(utc_tm1);
+	printf("==========timeTest1==========\n");
+	time_t paratime;
+	time(&paratime);
+	printf("test gmtim():\n");
+	struct tm *utc_tm = gmtime(&paratime);
+	print_tm(utc_tm);
+
+	printf("test localtime():\n");
+	struct tm *loc_tm = localtime(&paratime);
+	print_tm(loc_tm);
+
+
+	printf("==========timeTest2==========\n");
+	printf("test clock_gettime():\n");
+	struct timeval tvl;
+	clock_gettime(CLOCK_REALTIME, &tvl);
+	utc_tm = gmtime(&tvl.tv_sec);
+	print_tm(utc_tm);
+	printf("micro second: %ld\n", tvl.tv_usec);
+
 }
