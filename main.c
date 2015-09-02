@@ -9,6 +9,7 @@
 #include "timeTest.h"
 
 int main(){
-	timeTest();
+	//timeTest();
+	timePrintTest();
 	return 0;
 }
