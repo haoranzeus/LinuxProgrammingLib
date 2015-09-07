@@ -6,9 +6,15 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
 #include <sys/time.h>
 #include <string.h>
+#include <limits.h>
+#include <unistd.h>
+#include <sys/times.h>
+#include <fcntl.h>
+#include <errno.h>
 
 #include "timeTest.h"
 
@@ -77,4 +83,37 @@ void timePrintTest(){
 	print_tm(&tmp2);
 }
 
+void printTimes(struct tms *buf){
+	long clockTicks = sysconf(_SC_CLK_TCK);
+	printf("tms_utime  on seconds: %.2f\n", (double)(buf->tms_utime)/clockTicks);
+	printf("tms_stime  on seconds: %.2f\n", (double)(buf->tms_stime)/clockTicks);
+	printf("tms_cutime on seconds: %.2f\n", (double)(buf->tms_cutime)/clockTicks);
+	printf("tis_cstime on seconds: %.2f\n", (double)(buf->tms_cstime)/clockTicks);
+}
+
+void sysTimeTest(){
+	//long clockTicks = sysconf(_SC_CLK_TCK);
+	printf("sysconf(_SC_CLK_TCK): %ld\n", sysconf(_SC_CLK_TCK));
+	struct tms buf;
+	int i = 0;
+	//clock_t start = clock();
+	for(i = 0; i < 1000000; i++)
+		getppid();
+	times(&buf);
+	clock_t tmp = clock();
+	printf("after 100000 times getppid(), test times()\n");
+	printTimes(&buf);
+	printf("and test clock()\n");
+	printf("clock() value on seconsd: %.2f\n", (double)tmp/CLOCKS_PER_SEC);
+}
+
+void errorTest(){
+	if (-1 == open("/tmp/rootfile", O_RDONLY)) {
+		int err = errno;
+		printf("strerror() test:\n");
+		printf("%s\n", strerror(err));
+		printf("perror() test:\n");
+		perror("perror");
+	}
+}
 

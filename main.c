@@ -10,6 +10,8 @@
 
 int main(){
 	//timeTest();
-	timePrintTest();
+	//timePrintTest();
+	//sysTimeTest();
+	errorTest();
 	return 0;
 }
