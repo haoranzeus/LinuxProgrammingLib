@@ -7,11 +7,14 @@
 
 
 #include "timeTest.h"
+#include "fileTest.h"
 
 int main(){
 	//timeTest();
 	//timePrintTest();
 	//sysTimeTest();
-	errorTest();
+	//errorTest();
+	//fileTest1();
+	fileTest2();
 	return 0;
 }
