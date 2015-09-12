@@ -15,6 +15,13 @@ int main(){
 	//sysTimeTest();
 	//errorTest();
 	//fileTest1();
-	fileTest2();
+	//fileTest2();
+	//dupTest();
+	//dup2Test();
+	//fcntlTest1();
+	//fcntlTest2();
+	//dupTest2();
+	fcntlTestGETFD_SETFD();
+	//fcntlTestGETFL_SETFL();
 	return 0;
 }
